@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mie Files for Flarum — graphify tree viewer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      margin: 20px 0 0 24px;
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #1e3a56;
+    }
+    .controls {
+      margin: 20px 0 15px 24px;
+    }
+    button {
+      margin-right: 10px;
+      padding: 8px 18px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s ease-in-out;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    button:active {
+      background: #004085;
+    }
+    #tree-container {
+      width: calc(100vw - 48px); /* Adjust for body margin/padding */
+      height: 85vh;
+      overflow: auto;
+      border-radius: 8px;
+      background: #fff;
+      margin-left: 24px;
+      margin-right: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border: 1px solid #ddd;
+    }
+    svg {
+      background: #fff;
+      border-radius: 8px;
+      display: block; /* Important for D3 */
+    }
+    .node circle {
+      stroke-width: 2.5px;
+    }
+    .node text { /* Base style for the <text> container */
+      font: 13px 'Segoe UI', sans-serif;
+      paint-order: stroke fill; /* Ensures text is readable over lines */
+      stroke: #fff; /* White halo */
+      stroke-width: 3px; /* Halo thickness */
+      stroke-linejoin: round;
+      stroke-opacity: 0.85; /* Halo opacity */
+    }
+    .link {
+      fill: none;
+      stroke-opacity: 0.7;
+      stroke-width: 2px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mie Files for Flarum — Knowledge Graph</h1>
+  <div class="controls">
+    <button onclick="expandAll()">Expand All</button>
+    <button onclick="collapseAll()">Collapse All</button>
+    <button onclick="resetView()">Reset View</button>
+  </div>
+  <div id="tree-container">
+    <svg id="tree-svg" width="6000" height="8000"></svg>
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    const initialJsonData = {"name":"Mie Files for Flarum","total_count":321,"children":[{"name":"composer.json","total_count":32,"children":[{"name":"analyse","total_count":1,"children":[]},{"name":"autoload","total_count":1,"children":[]},{"name":"autoload-dev","total_count":1,"children":[]},{"name":"aws/aws-sdk-php","total_count":1,"children":[]},{"name":"backgroundColor","total_count":1,"children":[]},{"name":"color","total_count":1,"children":[]},{"name":"config","total_count":1,"children":[]},{"name":"description","total_count":1,"children":[]},{"name":"extra","total_count":1,"children":[]},{"name":"flarum-extension","total_count":1,"children":[]},{"name":"flarum/core","total_count":1,"children":[]},{"name":"icon","total_count":1,"children":[]},{"name":"license","total_count":1,"children":[]},{"name":"lint","total_count":1,"children":[]},{"name":"Mie\\\\FlarumFiles\\\\","total_count":1,"children":[]},{"name":"Mie\\\\FlarumFiles\\\\Tests\\\\","total_count":1,"children":[]},{"name":"minimum-stability","total_count":1,"children":[]},{"name":"name","total_count":1,"children":[]},{"name":"name","total_count":1,"children":[]},{"name":"phpstan/phpstan","total_count":1,"children":[]},{"name":"phpunit/phpunit","total_count":1,"children":[]},{"name":"prefer-stable","total_count":1,"children":[]},{"name":"psr-4","total_count":1,"children":[]},{"name":"psr-4","total_count":1,"children":[]},{"name":"require","total_count":1,"children":[]},{"name":"require-dev","total_count":1,"children":[]},{"name":"scripts","total_count":1,"children":[]},{"name":"sort-packages","total_count":1,"children":[]},{"name":"test","total_count":1,"children":[]},{"name":"test:integration","total_count":1,"children":[]},{"name":"title","total_count":1,"children":[]},{"name":"type","total_count":1,"children":[]}]},{"name":"docs","total_count":9,"children":[{"name":"ARCHITECTURE.md","total_count":9,"children":[{"name":"Architecture","total_count":1,"children":[]},{"name":"ARCHITECTURE.md","total_count":1,"children":[]},{"name":"Insertion and delivery","total_count":1,"children":[]},{"name":"Local code map","total_count":1,"children":[]},{"name":"Post associations and cleanup","total_count":1,"children":[]},{"name":"Primary flows","total_count":1,"children":[]},{"name":"Runtime entry points","total_count":1,"children":[]},{"name":"Source layout","total_count":1,"children":[]},{"name":"Upload","total_count":1,"children":[]}]}]},{"name":"js","total_count":124,"children":[{"name":"package.json","total_count":24,"children":[{"name":"@types/node","total_count":1,"children":[]},{"name":"@types/node","total_count":1,"children":[]},{"name":"build","total_count":1,"children":[]},{"name":"build:admin","total_count":1,"children":[]},{"name":"build:forum","total_count":1,"children":[]},{"name":"devDependencies","total_count":1,"children":[]},{"name":"flarum-webpack-config","total_count":1,"children":[]},{"name":"flarum-webpack-config","total_count":1,"children":[]},{"name":"private","total_count":1,"children":[]},{"name":"scripts","total_count":1,"children":[]},{"name":"test:admin","total_count":1,"children":[]},{"name":"test:common","total_count":1,"children":[]},{"name":"test:forum","total_count":1,"children":[]},{"name":"typecheck:admin","total_count":1,"children":[]},{"name":"typecheck:common","total_count":1,"children":[]},{"name":"typecheck:forum","total_count":1,"children":[]},{"name":"typescript","total_count":1,"children":[]},{"name":"typescript","total_count":1,"children":[]},{"name":"vitest","total_count":1,"children":[]},{"name":"vitest","total_count":1,"children":[]},{"name":"webpack","total_count":1,"children":[]},{"name":"webpack","total_count":1,"children":[]},{"name":"webpack-cli","total_count":1,"children":[]},{"name":"webpack-cli","total_count":1,"children":[]}]},{"name":"src","total_count":80,"children":[{"name":"admin","total_count":43,"children":[{"name":"categoryUtils.js","total_count":4,"children":[{"name":"clonePreset()","total_count":1,"children":[]},{"name":"INSERT_TEMPLATES","total_count":1,"children":[]},{"name":"PRESETS","total_count":1,"children":[]},{"name":"validateCategories()","total_count":1,"children":[]}]},{"name":"components","total_count":35,"children":[{"name":"MimeModal.js","total_count":6,"children":[{"name":".className()","total_count":1,"children":[]},{"name":".content()","total_count":1,"children":[]},{"name":".inspect()","total_count":1,"children":[]},{"name":".oninit()","total_count":1,"children":[]},{"name":".title()","total_count":1,"children":[]},{"name":"MimeModal","total_count":1,"children":[]}]},{"name":"SettingsPage.js","total_count":22,"children":[{"name":".addPreset()","total_count":1,"children":[]},{"name":".categoryHasErrors()","total_count":1,"children":[]},{"name":".categoryInput()","total_count":1,"children":[]},{"name":".categoryModule()","total_count":1,"children":[]},{"name":".errorText()","total_count":1,"children":[]},{"name":".fieldClass()","total_count":1,"children":[]},{"name":".fileManagement()","total_count":1,"children":[]},{"name":".imageManagement()","total_count":1,"children":[]},{"name":".load()","total_count":1,"children":[]},{"name":".oninit()","total_count":1,"children":[]},{"name":".openStorage()","total_count":1,"children":[]},{"name":".pluginManagement()","total_count":1,"children":[]},{"name":".reloadStorages()","total_count":1,"children":[]},{"name":".ruleClass()","total_count":1,"children":[]},{"name":".ruleError()","total_count":1,"children":[]},{"name":".saveCategories()","total_count":1,"children":[]},{"name":".saveSettings()","total_count":1,"children":[]},{"name":".settingNumber()","total_count":1,"children":[]},{"name":".storageManagement()","total_count":1,"children":[]},{"name":".update()","total_count":1,"children":[]},{"name":".view()","total_count":1,"children":[]},{"name":"SettingsPage","total_count":1,"children":[]}]},{"name":"StorageModal.js","total_count":7,"children":[{"name":".className()","total_count":1,"children":[]},{"name":".content()","total_count":1,"children":[]},{"name":".field()","total_count":1,"children":[]},{"name":".oninit()","total_count":1,"children":[]},{"name":".save()","total_count":1,"children":[]},{"name":".title()","total_count":1,"children":[]},{"name":"StorageModal","total_count":1,"children":[]}]}]},{"name":"permissions.js","total_count":3,"children":[{"name":"add()","total_count":1,"children":[]},{"name":"registered","total_count":1,"children":[]},{"name":"registerPermissions()","total_count":1,"children":[]}]},{"name":"index.js","total_count":1,"children":[]}]},{"name":"common","total_count":9,"children":[{"name":"api.ts","total_count":3,"children":[{"name":".request()","total_count":1,"children":[]},{"name":"ApiClient","total_count":1,"children":[]},{"name":"createFileApi()","total_count":1,"children":[]}]},{"name":"types.ts","total_count":6,"children":[{"name":"FileCategory","total_count":1,"children":[]},{"name":"FileError","total_count":1,"children":[]},{"name":"FileListResponse","total_count":1,"children":[]},{"name":"FileRecord","total_count":1,"children":[]},{"name":"FileStatus","total_count":1,"children":[]},{"name":"FileTypeRule","total_count":1,"children":[]}]}]},{"name":"forum","total_count":28,"children":[{"name":"api.js","total_count":3,"children":[{"name":"apiUrl()","total_count":1,"children":[]},{"name":"errorMessage()","total_count":1,"children":[]},{"name":"request()","total_count":1,"children":[]}]},{"name":"components","total_count":23,"children":[{"name":"DeleteFilesModal.js","total_count":4,"children":[{"name":".className()","total_count":1,"children":[]},{"name":".content()","total_count":1,"children":[]},{"name":".title()","total_count":1,"children":[]},{"name":"DeleteFilesModal","total_count":1,"children":[]}]},{"name":"FileLibraryModal.js","total_count":12,"children":[{"name":".className()","total_count":1,"children":[]},{"name":".confirmDelete()","total_count":1,"children":[]},{"name":".content()","total_count":1,"children":[]},{"name":".deleteSelected()","total_count":1,"children":[]},{"name":".details()","total_count":1,"children":[]},{"name":".fileTile()","total_count":1,"children":[]},{"name":".insert()","total_count":1,"children":[]},{"name":".load()","total_count":1,"children":[]},{"name":".oninit()","total_count":1,"children":[]},{"name":".title()","total_count":1,"children":[]},{"name":".toggle()","total_count":1,"children":[]},{"name":"FileLibraryModal","total_count":1,"children":[]}]},{"name":"UploadModal.js","total_count":7,"children":[{"name":".className()","total_count":1,"children":[]},{"name":".content()","total_count":1,"children":[]},{"name":".enqueue()","total_count":1,"children":[]},{"name":".oninit()","total_count":1,"children":[]},{"name":".title()","total_count":1,"children":[]},{"name":".uploadOne()","total_count":1,"children":[]},{"name":"UploadModal","total_count":1,"children":[]}]}]},{"name":"format.js","total_count":1,"children":[{"name":"humanSize()","total_count":1,"children":[]}]},{"name":"index.js","total_count":1,"children":[]}]}]},{"name":"tests","total_count":3,"children":[{"name":"admin","total_count":1,"children":[{"name":"categoryUtils.test.js","total_count":1,"children":[]}]},{"name":"common","total_count":1,"children":[{"name":"api.test.ts","total_count":1,"children":[]}]},{"name":"forum","total_count":1,"children":[{"name":"api.test.js","total_count":1,"children":[]}]}]},{"name":"tsconfig.json","total_count":13,"children":[{"name":"compilerOptions","total_count":1,"children":[]},{"name":"esModuleInterop","total_count":1,"children":[]},{"name":"include","total_count":1,"children":[]},{"name":"module","total_count":1,"children":[]},{"name":"moduleResolution","total_count":1,"children":[]},{"name":"node","total_count":1,"children":[]},{"name":"skipLibCheck","total_count":1,"children":[]},{"name":"src/common/**/*.ts","total_count":1,"children":[]},{"name":"strict","total_count":1,"children":[]},{"name":"target","total_count":1,"children":[]},{"name":"tests/**/*.ts","total_count":1,"children":[]},{"name":"types","total_count":1,"children":[]},{"name":"vitest/globals","total_count":1,"children":[]}]},{"name":"admin.js","total_count":1,"children":[]},{"name":"forum.js","total_count":1,"children":[]},{"name":"vitest.config.ts","total_count":1,"children":[]},{"name":"webpack.config.js","total_count":1,"children":[]}]},{"name":"migrations","total_count":5,"children":[{"name":"2026_01_01_000000_create_mie_files.php","total_count":1,"children":[]},{"name":"2026_01_01_000001_create_mie_file_post.php","total_count":1,"children":[]},{"name":"2026_01_01_000002_create_mie_file_settings.php","total_count":1,"children":[]},{"name":"2026_01_01_000003_create_mie_file_categories.php","total_count":1,"children":[]},{"name":"2026_01_01_000004_create_mie_file_deliveries.php","total_count":1,"children":[]}]},{"name":"README.md","total_count":8,"children":[{"name":"Architecture","total_count":1,"children":[]},{"name":"Behavior","total_count":1,"children":[]},{"name":"Development checks","total_count":1,"children":[]},{"name":"Install","total_count":1,"children":[]},{"name":"Maintenance","total_count":1,"children":[]},{"name":"Mie Files for Flarum 2.x","total_count":1,"children":[]},{"name":"README.md","total_count":1,"children":[]},{"name":"Storage","total_count":1,"children":[]}]},{"name":"src","total_count":129,"children":[{"name":"Api","total_count":39,"children":[{"name":"Controller","total_count":32,"children":[{"name":"CategoryController.php","total_count":8,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".create()","total_count":1,"children":[]},{"name":".delete()","total_count":1,"children":[]},{"name":".handle()","total_count":1,"children":[]},{"name":".index()","total_count":1,"children":[]},{"name":".replace()","total_count":1,"children":[]},{"name":".update()","total_count":1,"children":[]},{"name":"CategoryController","total_count":1,"children":[]}]},{"name":"FileController.php","total_count":6,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".delete()","total_count":1,"children":[]},{"name":".handle()","total_count":1,"children":[]},{"name":".index()","total_count":1,"children":[]},{"name":".upload()","total_count":1,"children":[]},{"name":"FileController","total_count":1,"children":[]}]},{"name":"MimeController.php","total_count":2,"children":[{"name":".handle()","total_count":1,"children":[]},{"name":"MimeController","total_count":1,"children":[]}]},{"name":"ProxyController.php","total_count":3,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".handle()","total_count":1,"children":[]},{"name":"ProxyController","total_count":1,"children":[]}]},{"name":"StorageController.php","total_count":7,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".attributes()","total_count":1,"children":[]},{"name":".delete()","total_count":1,"children":[]},{"name":".handle()","total_count":1,"children":[]},{"name":".index()","total_count":1,"children":[]},{"name":".save()","total_count":1,"children":[]},{"name":"StorageController","total_count":1,"children":[]}]},{"name":"TemplateController.php","total_count":3,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".handle()","total_count":1,"children":[]},{"name":"TemplateController","total_count":1,"children":[]}]},{"name":"ThumbnailController.php","total_count":3,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".handle()","total_count":1,"children":[]},{"name":"ThumbnailController","total_count":1,"children":[]}]}]},{"name":"JsonResponder.php","total_count":3,"children":[{"name":".data()","total_count":1,"children":[]},{"name":".error()","total_count":1,"children":[]},{"name":"JsonResponder","total_count":1,"children":[]}]},{"name":"Serializer","total_count":4,"children":[{"name":"CategorySerializer.php","total_count":2,"children":[{"name":".attributes()","total_count":1,"children":[]},{"name":"CategorySerializer","total_count":1,"children":[]}]},{"name":"FileSerializer.php","total_count":2,"children":[{"name":".attributes()","total_count":1,"children":[]},{"name":"FileSerializer","total_count":1,"children":[]}]}]}]},{"name":"CategoryDefaults.php","total_count":1,"children":[{"name":"CategoryDefaults","total_count":1,"children":[]}]},{"name":"Console","total_count":2,"children":[{"name":"CleanOrphansCommand.php","total_count":2,"children":[{"name":".handle()","total_count":1,"children":[]},{"name":"CleanOrphansCommand","total_count":1,"children":[]}]}]},{"name":"Listener","total_count":3,"children":[{"name":"SyncPostFiles.php","total_count":3,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".handle()","total_count":1,"children":[]},{"name":"SyncPostFiles","total_count":1,"children":[]}]}]},{"name":"Model","total_count":8,"children":[{"name":"Category.php","total_count":2,"children":[{"name":".files()","total_count":1,"children":[]},{"name":"Category","total_count":1,"children":[]}]},{"name":"File.php","total_count":4,"children":[{"name":".category()","total_count":1,"children":[]},{"name":".posts()","total_count":1,"children":[]},{"name":".user()","total_count":1,"children":[]},{"name":"File","total_count":1,"children":[]}]},{"name":"FileDelivery.php","total_count":1,"children":[{"name":"FileDelivery","total_count":1,"children":[]}]},{"name":"StorageConfig.php","total_count":1,"children":[{"name":"StorageConfig","total_count":1,"children":[]}]}]},{"name":"Service","total_count":67,"children":[{"name":"CategoryService.php","total_count":7,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".assertStorageExists()","total_count":1,"children":[]},{"name":".create()","total_count":1,"children":[]},{"name":".replaceAll()","total_count":1,"children":[]},{"name":".seedTemplates()","total_count":1,"children":[]},{"name":".update()","total_count":1,"children":[]},{"name":"CategoryService","total_count":1,"children":[]}]},{"name":"CredentialCipher.php","total_count":4,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".decrypt()","total_count":1,"children":[]},{"name":".encrypt()","total_count":1,"children":[]},{"name":"CredentialCipher","total_count":1,"children":[]}]},{"name":"DeliveryService.php","total_count":10,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".assertAvailable()","total_count":1,"children":[]},{"name":".assertNotHotlinked()","total_count":1,"children":[]},{"name":".assertPermission()","total_count":1,"children":[]},{"name":".isTrackedTemplate()","total_count":1,"children":[]},{"name":".modeFor()","total_count":1,"children":[]},{"name":".open()","total_count":1,"children":[]},{"name":".thumbnailUrl()","total_count":1,"children":[]},{"name":".url()","total_count":1,"children":[]},{"name":"DeliveryService","total_count":1,"children":[]}]},{"name":"DogeCloudStorage.php","total_count":6,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".delete()","total_count":1,"children":[]},{"name":".publicUrl()","total_count":1,"children":[]},{"name":".put()","total_count":1,"children":[]},{"name":".stream()","total_count":1,"children":[]},{"name":"DogeCloudStorage","total_count":1,"children":[]}]},{"name":"FileService.php","total_count":6,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".remove()","total_count":1,"children":[]},{"name":".safeName()","total_count":1,"children":[]},{"name":".temporaryPath()","total_count":1,"children":[]},{"name":".upload()","total_count":1,"children":[]},{"name":"FileService","total_count":1,"children":[]}]},{"name":"LocalStorage.php","total_count":6,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".delete()","total_count":1,"children":[]},{"name":".publicUrl()","total_count":1,"children":[]},{"name":".put()","total_count":1,"children":[]},{"name":".stream()","total_count":1,"children":[]},{"name":"LocalStorage","total_count":1,"children":[]}]},{"name":"OrphanCleaner.php","total_count":3,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".clean()","total_count":1,"children":[]},{"name":"OrphanCleaner","total_count":1,"children":[]}]},{"name":"PermissionService.php","total_count":3,"children":[{"name":".can()","total_count":1,"children":[]},{"name":".key()","total_count":1,"children":[]},{"name":"PermissionService","total_count":1,"children":[]}]},{"name":"PostFileSync.php","total_count":3,"children":[{"name":".detach()","total_count":1,"children":[]},{"name":".sync()","total_count":1,"children":[]},{"name":"PostFileSync","total_count":1,"children":[]}]},{"name":"Storage.php","total_count":4,"children":[{"name":"delete()","total_count":1,"children":[]},{"name":"publicUrl()","total_count":1,"children":[]},{"name":"put()","total_count":1,"children":[]},{"name":"stream()","total_count":1,"children":[]}]},{"name":"StorageConfigService.php","total_count":3,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".save()","total_count":1,"children":[]},{"name":"StorageConfigService","total_count":1,"children":[]}]},{"name":"StorageFactory.php","total_count":3,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".make()","total_count":1,"children":[]},{"name":"StorageFactory","total_count":1,"children":[]}]},{"name":"TemplateService.php","total_count":4,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".humanSize()","total_count":1,"children":[]},{"name":".render()","total_count":1,"children":[]},{"name":"TemplateService","total_count":1,"children":[]}]},{"name":"ThumbnailService.php","total_count":5,"children":[{"name":".__construct()","total_count":1,"children":[]},{"name":".copyToTemporaryFile()","total_count":1,"children":[]},{"name":".make()","total_count":1,"children":[]},{"name":".writeImage()","total_count":1,"children":[]},{"name":"ThumbnailService","total_count":1,"children":[]}]}]},{"name":"Validator","total_count":9,"children":[{"name":"CategoryValidator.php","total_count":5,"children":[{"name":".assertNoConflicts()","total_count":1,"children":[]},{"name":".normalizeRules()","total_count":1,"children":[]},{"name":".slug()","total_count":1,"children":[]},{"name":".validate()","total_count":1,"children":[]},{"name":"CategoryValidator","total_count":1,"children":[]}]},{"name":"MimeValidator.php","total_count":4,"children":[{"name":".detect()","total_count":1,"children":[]},{"name":".extension()","total_count":1,"children":[]},{"name":".validate()","total_count":1,"children":[]},{"name":"MimeValidator","total_count":1,"children":[]}]}]}]},{"name":"tests","total_count":13,"children":[{"name":"php","total_count":13,"children":[{"name":"CategoryDefaultsTest.php","total_count":2,"children":[{"name":".testPresetsUseRealExtensionsAndMimes()","total_count":1,"children":[]},{"name":"CategoryDefaultsTest","total_count":1,"children":[]}]},{"name":"CategoryValidatorTest.php","total_count":4,"children":[{"name":".testImageTemplateRequiresImageMime()","total_count":1,"children":[]},{"name":".testOggCanBelongToAudioAndVideoOnlyWithDifferentFullMime()","total_count":1,"children":[]},{"name":".testRegularExtensionCannotBeDuplicatedAcrossCategories()","total_count":1,"children":[]},{"name":"CategoryValidatorTest","total_count":1,"children":[]}]},{"name":"Integration","total_count":4,"children":[{"name":"ExtensionContractTest.php","total_count":4,"children":[{"name":".testExtensionFileLoadsAgainstFlarumTwo()","total_count":1,"children":[]},{"name":".testPublicFilePayloadOmitsStorageObjectKey()","total_count":1,"children":[]},{"name":".testStoragePayloadMasksCredentialsAndEndpoint()","total_count":1,"children":[]},{"name":"ExtensionContractTest","total_count":1,"children":[]}]}]},{"name":"MimeValidatorTest.php","total_count":3,"children":[{"name":".testExtensionIsNormalized()","total_count":1,"children":[]},{"name":".testSpoofedExtensionIsRejected()","total_count":1,"children":[]},{"name":"MimeValidatorTest","total_count":1,"children":[]}]}]}]},{"name":"extend.php","total_count":1,"children":[]}]};
+
+    function transformData(jsonData) {
+        // Helper function to recursively build the children structure
+        function processNode(node, parentL1StageName) {
+            let displayName = node.name;
+            // Append total_count if it exists and is not already in the name
+            if (node.total_count !== undefined) {
+                if (!/\(Total Count: \d+\)$/.test(displayName)) {
+                    displayName += ` (Total Count: ${node.total_count})`;
+                }
+            }
+
+            const newNode = { name: displayName };
+
+            if (parentL1StageName === "Root") {
+                 newNode.originalStageName = node.name;
+            } else {
+                newNode.originalStageName = parentL1StageName;
+            }
+
+            if (node.children && node.children.length > 0) {
+                const stageNameToPass = (parentL1StageName === "Root") ? node.name : parentL1StageName;
+                newNode.children = node.children.map(child => processNode(child, stageNameToPass));
+            }
+
+            return newNode;
+        }
+
+        let rootDisplayName = jsonData.name;
+        if (jsonData.total_count !== undefined && !/\(Total Count: \d+\)$/.test(rootDisplayName)) {
+            rootDisplayName += ` (Total Count: ${jsonData.total_count})`;
+        }
+
+        return {
+            name: rootDisplayName,
+            originalStageName: "Root",
+            children: (jsonData.children || []).map(child => processNode(child, "Root"))
+        };
+    }
+
+    const treeData = transformData(initialJsonData);
+
+    // Auto-populated phaseColors: every depth-1 child of the root gets
+    // a stable colour from a bigger palette so all top-level dirs are
+    // distinguishable.
+    const PALETTE = [
+      ["#3498DB","#2980B9","#AED6F1"], ["#2ECC71","#27AE60","#A9DFBF"],
+      ["#E74C3C","#C0392B","#F5B7B1"], ["#9B59B6","#8E44AD","#D7BDE2"],
+      ["#F39C12","#D68910","#FAD7A0"], ["#1ABC9C","#117864","#A2D9CE"],
+      ["#34495E","#1B2631","#ABB2B9"], ["#E67E22","#BA4A00","#F5CBA7"],
+      ["#16A085","#0E6655","#A2D9CE"], ["#D35400","#A04000","#EDBB99"],
+      ["#7F8C8D","#566573","#D5DBDB"], ["#C0392B","#7B241C","#F5B7B1"],
+      ["#2E86C1","#1B4F72","#A9CCE3"], ["#28B463","#196F3D","#A9DFBF"],
+      ["#AF7AC5","#6C3483","#D2B4DE"],
+    ];
+    const phaseColors = { "Root": { fill: "#4A4A4A", stroke: "#333333", collapsedFill: "#6C757D" },
+                          "Default": { fill: "#BDC3C7", stroke: "#95A5A6", collapsedFill: "#ECF0F1" } };
+    (initialJsonData.children || []).forEach((c, i) => {
+      const pal = PALETTE[i % PALETTE.length];
+      phaseColors[c.name] = { fill: pal[0], stroke: pal[1], collapsedFill: pal[2] };
+    });
+
+    const levelSpecificPalettes = {
+      0: { fill: "#4A4A4A", stroke: "#333333", collapsedFill: "#6C757D" },
+      2: { fill: "#6ab04c", stroke: "#508a38", collapsedFill: "#a3d391" },
+      3: { fill: "#f0932b", stroke: "#d0730f", collapsedFill: "#f6c07e" },
+      4: { fill: "#be2edd", stroke: "#a01cb3", collapsedFill: "#e08bf2" },
+      5: { fill: "#00a8ff", stroke: "#007ac1", collapsedFill: "#74d2ff" },
+      6: { fill: "#e55039", stroke: "#c23620", collapsedFill: "#f09a8d" },
+      default: { fill: "#747d8c", stroke: "#57606f", collapsedFill: "#a4b0be" }
+    };
+
+    const svgElement = d3.select("#tree-svg");
+    const initialSvgWidth = +svgElement.attr("width");
+    const initialSvgHeight = +svgElement.attr("height");
+    const margin = { top: 40, right: 120, bottom: 80, left: 450 };
+    let width = initialSvgWidth - margin.left - margin.right;
+    let height = initialSvgHeight - margin.top - margin.bottom;
+    const duration = 500;
+    let nodeCounter = 0;
+    const g = svgElement.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+    const treemap = d3.tree().nodeSize([40, 0]);
+    let rootNode = d3.hierarchy(treeData, d => d.children);
+    rootNode.x0 = 0;
+    rootNode.y0 = 0;
+
+    if (rootNode.children) {
+      rootNode.children.forEach(d_child => {
+        if (d_child.children) { collapseBranch(d_child); }
+      });
+    }
+    updateTree(rootNode);
+
+    function collapseBranch(d) { if (d.children) { d._children = d.children; d._children.forEach(collapseBranch); d.children = null; } }
+    function expandBranch(d) { if (d._children) { d.children = d._children; d._children = null; } if (d.children) { d.children.forEach(expandBranch); } }
+    window.expandAll = () => { expandBranch(rootNode); updateTree(rootNode); };
+    window.collapseAll = () => { if (rootNode.children) { rootNode.children.forEach(collapseBranch); } updateTree(rootNode); };
+    window.resetView = () => { if (rootNode.children) { rootNode.children.forEach(d_child => { if (d_child.children || d_child._children) { collapseBranch(d_child); } }); } if (rootNode._children && !rootNode.children) { rootNode.children = rootNode._children; rootNode._children = null; } updateTree(rootNode); };
+
+    function updateTree(source) {
+      const treeLayoutData = treemap(rootNode);
+      let nodes = treeLayoutData.descendants();
+      let links = treeLayoutData.descendants().slice(1);
+
+      let minX = 0;
+      let maxX = 0;
+      if (nodes.length > 0) {
+        minX = d3.min(nodes, d => d.x);
+        maxX = d3.max(nodes, d => d.x);
+      }
+
+      let neededHeight = Math.max(initialSvgHeight, maxX - minX + margin.top + margin.bottom + 100);
+      svgElement.transition().duration(duration / 2).attr("height", neededHeight);
+      g.transition().duration(duration / 2).attr("transform", `translate(${margin.left},${margin.top - minX + 40})`);
+
+      nodes.forEach(d => { d.y = d.depth * 400; }); // Adjust horizontal separation if needed
+
+      const node = g.selectAll('g.node').data(nodes, d => d.id || (d.id = ++nodeCounter));
+      const nodeEnter = node.enter().append('g')
+        .attr('class', d => "node" + (d.children || d._children ? " node--internal" : " node--leaf") + (d._children ? " _children" : ""))
+        .attr('transform', d => `translate(${source.y0},${source.x0})`)
+        .on('click', (event, d) => { if (d.children) { d._children = d.children; d.children = null; } else if (d._children) { d.children = d._children; d._children = null; } updateTree(d); })
+        .style('cursor', d => (d.children || d._children) ? 'pointer' : 'default');
+
+      nodeEnter.append('circle').attr('r', 1e-6);
+
+      nodeEnter.append('text')
+        .attr('dy', '.35em')
+        .attr('x', d => d.children || d._children ? -14 : 14)
+        .attr('text-anchor', d => d.children || d._children ? 'end' : 'start')
+        .style("fill-opacity", 1e-6)
+        .call(wrapText, 380);
+
+      const nodeUpdate = nodeEnter.merge(node);
+      nodeUpdate.transition().duration(duration)
+        .attr('transform', d => `translate(${d.y},${d.x})`)
+        .attr('class', d => "node" + (d.children ? " node--internal" : " node--leaf") + (d._children ? " node--internal _children" : ""));
+
+      nodeUpdate.select('circle').attr('r', 8.5)
+        .style('fill', d => {
+            let palette;
+            if (d.depth === 0) {
+                palette = levelSpecificPalettes[0];
+            } else if (d.depth === 1) {
+                palette = phaseColors[d.data.originalStageName] || phaseColors.Default;
+            } else {
+                palette = levelSpecificPalettes[d.depth] || levelSpecificPalettes.default;
+            }
+            if (d._children) return palette.collapsedFill;
+            if (d.children) return palette.fill;
+            return "#fff";
+        })
+        .style('stroke', d => {
+            let palette;
+            if (d.depth === 0) {
+                palette = levelSpecificPalettes[0];
+            } else if (d.depth === 1) {
+                palette = phaseColors[d.data.originalStageName] || phaseColors.Default;
+            } else {
+                palette = levelSpecificPalettes[d.depth] || levelSpecificPalettes.default;
+            }
+            return palette.stroke;
+        });
+      nodeUpdate.select('text').style("fill-opacity", 1).call(wrapText, 380);
+
+      const nodeExit = node.exit().transition().duration(duration).attr('transform', d => `translate(${source.y},${source.x})`).remove();
+      nodeExit.select('circle').attr('r', 1e-6);
+      nodeExit.select('text').style('fill-opacity', 1e-6);
+
+      const link = g.selectAll('path.link').data(links, d => d.id);
+      const linkEnter = link.enter().insert('path', "g").attr('class', 'link').attr('d', d => { const o = { x: source.x0, y: source.y0 }; return diagonal(o, o); });
+
+      linkEnter.merge(link).transition().duration(duration).attr('d', d => diagonal(d, d.parent))
+        .style('stroke', d => {
+            const sourceNode = d.parent;
+            if (!sourceNode) return phaseColors.Default.stroke;
+            const l1AncestorName = sourceNode.data.originalStageName;
+            const colorPalette = phaseColors[l1AncestorName] || phaseColors.Default;
+            return colorPalette.stroke;
+        });
+      link.exit().transition().duration(duration).attr('d', d => { const o = { x: source.x, y: source.y }; return diagonal(o, o); }).remove();
+      nodes.forEach(d => { d.x0 = d.x; d.y0 = d.y; });
+    }
+
+    function diagonal(s, d) { return `M ${s.y} ${s.x} C ${(s.y + d.y) / 2} ${s.x}, ${(s.y + d.y) / 2} ${d.x}, ${d.y} ${d.x}`; }
+
+    function wrapText(textElements, maxWidth) {
+        const textPartColors = {
+            name: '#343a40',
+            count: '#0056b3'
+        };
+        const countRegex = /(\s\(Total Count: \d+\))$/;
+
+        textElements.each(function () {
+            const textD3 = d3.select(this);
+            const originalNodeText = textD3.datum().data.name;
+            const x = parseFloat(textD3.attr("x") || 0);
+            const initialDy = textD3.attr("dy");
+            const textAnchor = textD3.attr("text-anchor");
+            const lineHeight = 1.1;
+
+            textD3.text(null);
+
+            let namePart = originalNodeText;
+            let countPartText = "";
+
+            const countMatch = originalNodeText.match(countRegex);
+            if (countMatch && originalNodeText.endsWith(countMatch[0])) {
+                namePart = originalNodeText.substring(0, originalNodeText.length - countMatch[0].length).trim();
+                countPartText = countMatch[0].trim();
+            }
+
+            const tokens = [];
+            namePart.split(/\s+/).filter(Boolean).forEach(word => {
+                tokens.push({ text: word, type: 'name' });
+            });
+            if (countPartText) {
+                tokens.push({ text: countPartText, type: 'count' });
+            }
+
+            if (tokens.length === 0 && originalNodeText) {
+                tokens.push({ text: originalNodeText, type: 'name' });
+            }
+
+            let currentTspan = textD3.append("tspan").attr("x", x).attr("dy", initialDy);
+            if (textAnchor === "end") currentTspan.attr("text-anchor", "end");
+
+            let lineTokens = [];
+
+            for (let i = 0; i < tokens.length; i++) {
+                const tokenObj = tokens[i];
+
+                lineTokens.push(tokenObj);
+                currentTspan.text(lineTokens.map(t => t.text).join(" "));
+
+                if (currentTspan.node().getComputedTextLength() > maxWidth && lineTokens.length > 1) {
+                    lineTokens.pop();
+
+                    currentTspan.text(null);
+                    lineTokens.forEach((prevToken, idx) => {
+                        currentTspan.append("tspan")
+                            .text((idx > 0 ? " " : "") + prevToken.text)
+                            .style("fill", textPartColors[prevToken.type] || textPartColors.name)
+                            .style("font-weight", prevToken.type === 'count' ? "bold" : "normal");
+                    });
+
+                    lineTokens = [tokenObj];
+                    currentTspan = textD3.append("tspan").attr("x", x).attr("dy", lineHeight + "em");
+                    if (textAnchor === "end") currentTspan.attr("text-anchor", "end");
+                }
+            }
+
+            currentTspan.text(null);
+            lineTokens.forEach((token, idx) => {
+                currentTspan.append("tspan")
+                    .text((idx > 0 ? " " : "") + token.text)
+                    .style("fill", textPartColors[token.type] || textPartColors.name)
+                    .style("font-weight", token.type === 'count' ? "bold" : "normal");
+            });
+
+            if (textD3.selectAll("tspan > tspan").empty() && textD3.select("tspan").text().length === 0 && originalNodeText) {
+                let t = textD3.select("tspan");
+                let displayText = originalNodeText;
+                t.text(displayText).style("fill", textPartColors.name);
+                if (t.node() && t.node().getComputedTextLength() > maxWidth && displayText.length > 20) {
+                    let estimatedChars = Math.floor(maxWidth / (t.node().getComputedTextLength()/displayText.length) );
+                    displayText = displayText.substring(0, Math.max(0, estimatedChars - 3)) + "...";
+                    t.text(displayText);
+                }
+            }
+        });
+    }
+  </script>
+</body>
+</html>
