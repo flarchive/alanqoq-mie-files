@@ -1,0 +1,107 @@
+mie-files:
+  admin:
+    settings: 私有文件
+    files_tab: 文件管理
+    storage_tab: 储存方式
+    images_tab: 图片设置
+    plugin_tab: 插件设置
+    file_categories: 文件分类
+    file_categories_help: 为文件后缀和 PHP MIME 类型建立精确规则，并设置大小、储存方式和插入模板。
+    add_preset: 添加预设分类
+    add_rule: 添加文件类型
+    remove_rule: 删除文件类型
+    remove_category: 删除分类
+    unnamed_category: 未命名分类
+    save_category: 保存分类
+    save_changes: 保存更改
+    saved: 已保存更改。
+    save: 保存
+    cancel: 取消
+    edit: 编辑
+    field_required: 此项必须填写。
+    field_invalid: 请填写有效且不冲突的值。
+    name: 分类名称
+    slug: 分类标识
+    permissionName: 分类权限名
+    maxSizeMb: 单个文件最大 MB
+    storageName: 储存方式
+    storage_name: 储存方式
+    storage_config_name: 配置名称
+    insert_template: 双击插入模板
+    type_rules: 文件后缀与 MIME 类型
+    preset_images: 图片
+    preset_pdf: PDF
+    preset_word: Word 文档
+    preset_spreadsheets: 电子表格
+    preset_archives: 归档文件
+    preset_audio: 音频
+    preset_video: 视频
+    template_file_download: 默认文件下载模板
+    template_image_download: 默认图片下载模板
+    template_image_inline: 完整图片预览模板
+    template_url_only: 仅 URL
+    template_markdown_image: Markdown 图片模板
+    template_bbcode_image: BBCode 图片模板
+    storage_methods: 储存方式
+    storage_help: 本地储存始终可用。多吉云可选择 Flarum 中转传出，或配置公开访问链接。
+    add_storage: 新增储存方式
+    storage_modal_title: 多吉云云储存
+    storage_accessKey: AccessKeyId
+    storage_secretKey: AccessKeySecret
+    storage_bucket: Bucket
+    storage_endpoint: Endpoint
+    storage_region: Region
+    storage_publicBaseUrl: 访问链接
+    secret_unchanged: 留空将保持已加密保存的密钥不变。
+    endpoint_unchanged: 留空将保持已保存的 Endpoint 不变。
+    delivery_proxy: Flarum 中转
+    delivery_direct: 公开直链
+    direct_warning_title: 直链模式限制
+    direct_link_warning: 公开直链发出后会绕过 PHP 下载统计、防盗链和逐次下载鉴权。
+    direct_confirm: 我已理解并接受这些限制。
+    image_settings: 图片设置
+    hotlink_protection: 对有统计的中转传出拒绝跨站 Referer
+    thumbnailWidth: 缩略图宽度
+    imageQuality: 图片质量
+    plugin_settings: 插件设置
+    orphanRetentionDays: 孤儿文件保留天数
+    mime_title: 确认 MIME 类型
+    mime_file: 上传文件并用 PHP finfo 检测
+    mime_extension: 按后缀查询
+    mime_source: 结果来源
+    mime_detected: MIME 结果
+    mime_confirm: 检测
+  forum:
+    upload: 上传文件
+    library: 文件库
+    upload_title: 上传文件
+    library_title: 我的文件库
+    category: 分类
+    choose_category: 请先选择上传分类。
+    choose_files: 点击选择文件
+    drop_files: 将文件拖到这里
+    close: 关闭
+    cancel: 取消
+    delete: 删除
+    network_error: 上传时发生网络错误。
+    upload_status_queued: 等待上传
+    upload_status_uploading: 正在上传
+    upload_status_success: 上传成功
+    upload_status_failed: 上传失败
+    library_empty: 没有上传成功的文件。
+    select_file: 单击文件查看详情，双击自动插入编辑器。
+    file_name: 文件名
+    file_size: 文件大小
+    file_type: MIME 类型
+    uploaded_at: 上传时间
+    insert_failed: 无法将该文件插入当前编辑器。
+    delete_selected: "删除已选（{count}）"
+    delete_confirm_title: 删除已选文件
+    delete_confirm_text: "确认删除已选的 {count} 个文件吗？储存对象也会被删除。"
+    unavailable: 文件不可用
+  permissions:
+    view_other: 查看其他用户文件库内容
+    delete_other: 删除其他用户文件库内容
+    category_view: "文件分类-{name}-查看"
+    category_download: "文件分类-{name}-下载"
+    category_upload: "文件分类-{name}-上传"
