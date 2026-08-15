@@ -1,0 +1,22 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "webpack --mode production",
+    "build:forum": "webpack --mode production",
+    "build:admin": "webpack --mode production",
+    "typecheck:common": "tsc --noEmit -p tsconfig.json",
+    "typecheck:forum": "tsc --noEmit -p tsconfig.json",
+    "typecheck:admin": "tsc --noEmit -p tsconfig.json",
+    "test:common": "vitest run tests/common",
+    "test:forum": "vitest run tests/forum",
+    "test:admin": "vitest run tests/admin"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "flarum-webpack-config": "^3.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0",
+    "webpack": "^5.104.0",
+    "webpack-cli": "^4.10.0"
+  }
+}
