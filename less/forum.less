@@ -1,0 +1,158 @@
+.mie-files-upload-button,
+.mie-files-library-button {
+  min-width: 36px;
+}
+
+.MieFiles-dropzone {
+  display: grid;
+  min-height: 180px;
+  place-content: center;
+  gap: 8px;
+  border: 2px dashed #9aa7b5;
+  background: #f7f9fb;
+  color: #4a5968;
+  cursor: pointer;
+  text-align: center;
+}
+
+.MieFiles-dropzone.is-dragging {
+  border-color: #2877b9;
+  background: #e8f4fb;
+}
+
+.MieFiles-dropzone .fa-cloud-upload-alt {
+  color: #2877b9;
+  font-size: 30px;
+}
+
+.MieFiles-uploadQueue {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.MieFiles-uploadRow {
+  display: grid;
+  gap: 5px;
+}
+
+.MieFiles-uploadMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+
+.MieFiles-uploadMeta strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.MieFiles-uploadRow.is-failed .MieFiles-uploadMeta span,
+.MieFiles-errorText {
+  color: #b42318;
+}
+
+.MieFiles-progress {
+  height: 6px;
+  overflow: hidden;
+  background: #dde4ea;
+}
+
+.MieFiles-progress span {
+  display: block;
+  height: 100%;
+  background: #2877b9;
+  transition: width 120ms linear;
+}
+
+.MieFiles-libraryLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 0.32fr);
+  gap: 16px;
+}
+
+.MieFiles-fileGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  align-content: start;
+}
+
+.MieFiles-fileTile {
+  position: relative;
+  display: grid;
+  min-height: 128px;
+  gap: 5px;
+  padding: 12px;
+  border: 1px solid #d6dde4;
+  background: #fff;
+  cursor: pointer;
+}
+
+.MieFiles-fileTile.is-active {
+  outline: 2px solid #2877b9;
+  outline-offset: -2px;
+}
+
+.MieFiles-selectBox {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.MieFiles-fileVisual {
+  color: #2877b9;
+  font-size: 28px;
+}
+
+.MieFiles-fileTile strong,
+.MieFiles-fileTile span,
+.MieFiles-fileDetails dd {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.MieFiles-fileDetails {
+  min-width: 0;
+  padding: 12px;
+  border-left: 1px solid #d6dde4;
+}
+
+.MieFiles-fileDetails dl {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3px;
+  margin: 0;
+}
+
+.MieFiles-fileDetails dt {
+  margin-top: 8px;
+  color: #6d7a88;
+  font-size: 12px;
+}
+
+.MieFiles-fileDetails dd {
+  margin: 0;
+}
+
+.MieFiles-modalActions,
+.MieFiles-confirmActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+@media (max-width: 650px) {
+  .MieFiles-libraryLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .MieFiles-fileDetails {
+    border-top: 1px solid #d6dde4;
+    border-left: 0;
+  }
+}
