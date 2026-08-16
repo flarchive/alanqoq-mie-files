@@ -1,0 +1,156 @@
+.MieFiles-settings {
+  width: 100%;
+}
+
+.MieFiles-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(130px, 1fr));
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.MieFiles-tab {
+  min-height: 52px;
+  border-bottom: 3px solid transparent;
+}
+
+.MieFiles-tab.is-active {
+  border-bottom-color: #2877b9;
+  color: #1d5f93;
+}
+
+.MieFiles-tabPanel h3,
+.MieFiles-tabPanel h4 {
+  margin-top: 0;
+}
+
+.MieFiles-sectionHeader,
+.MieFiles-categoryHeader,
+.MieFiles-ruleHeader,
+.MieFiles-categoryFooter,
+.MieFiles-adminActions,
+.MieFiles-globalSave {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.MieFiles-headerActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.MieFiles-headerActions .FormControl {
+  width: auto;
+  min-width: 160px;
+}
+
+.MieFiles-categoryList {
+  margin-top: 20px;
+}
+
+.MieFiles-category {
+  padding: 18px 0;
+  border-top: 1px solid #d7dee5;
+}
+
+.MieFiles-fieldGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.MieFiles-ruleRow {
+  display: grid;
+  grid-template-columns: minmax(100px, 0.35fr) minmax(220px, 1fr) 38px;
+  gap: 8px;
+  align-items: start;
+  margin-top: 8px;
+}
+
+.MieFiles-fieldError,
+.MieFiles-adminError {
+  color: #b42318;
+  font-size: 12px;
+}
+
+.MieFiles-adminError {
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.MieFiles-invalid {
+  border-color: #b42318 !important;
+  box-shadow: 0 0 0 1px #b42318;
+}
+
+.MieFiles-categoryFooter,
+.MieFiles-globalSave,
+.MieFiles-adminActions {
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.MieFiles-storageList {
+  margin-top: 16px;
+  border-top: 1px solid #d7dee5;
+}
+
+.MieFiles-storageRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #d7dee5;
+}
+
+.MieFiles-storageRow > div {
+  display: grid;
+  gap: 4px;
+}
+
+.MieFiles-storageRow span {
+  color: #667685;
+}
+
+.MieFiles-directWarning {
+  padding: 12px;
+  border-left: 4px solid #c68400;
+  background: #fff8e7;
+  color: #5d4300;
+}
+
+.MieFiles-mimeResult {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: 7px;
+}
+
+.MieFiles-mimeResult dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 900px) {
+  .MieFiles-tabs,
+  .MieFiles-fieldGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .MieFiles-tabs,
+  .MieFiles-fieldGrid,
+  .MieFiles-ruleRow {
+    grid-template-columns: 1fr;
+  }
+
+  .MieFiles-sectionHeader {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
