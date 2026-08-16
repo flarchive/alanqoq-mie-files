@@ -1,0 +1,107 @@
+mie-files:
+  admin:
+    settings: Private files
+    files_tab: File management
+    storage_tab: Storage methods
+    images_tab: Image settings
+    plugin_tab: Plugin settings
+    file_categories: File categories
+    file_categories_help: Define exact extension and PHP MIME pairs, limits, storage and insertion behavior.
+    add_preset: Add preset
+    add_rule: Add file type rule
+    remove_rule: Remove rule
+    remove_category: Remove category
+    unnamed_category: Unnamed category
+    save_category: Save category
+    save_changes: Save changes
+    saved: Changes saved.
+    save: Save
+    cancel: Cancel
+    edit: Edit
+    field_required: This field is required.
+    field_invalid: Enter a valid, non-conflicting value.
+    name: Category name
+    slug: Category slug
+    permissionName: Permission name
+    maxSizeMb: Maximum file size (MB)
+    storageName: Storage method
+    storage_name: Storage method
+    insert_template: Insertion template
+    type_rules: Extension and MIME rules
+    preset_images: Images
+    preset_pdf: PDF
+    preset_word: Word documents
+    preset_spreadsheets: Spreadsheets
+    preset_archives: Archives
+    preset_audio: Audio
+    preset_video: Video
+    template_file_download: Default file download
+    template_image_download: Default image download
+    template_image_inline: Full image preview
+    template_url_only: URL only
+    template_markdown_image: Markdown image
+    template_bbcode_image: BBCode image
+    storage_methods: Storage methods
+    storage_help: Local storage is always available. DogeCloud can use Flarum proxy delivery or a configured public base URL.
+    add_storage: Add storage
+    storage_modal_title: DogeCloud storage
+    storage_config_name: Configuration name
+    storage_accessKey: AccessKeyId
+    storage_secretKey: AccessKeySecret
+    storage_bucket: Bucket
+    storage_endpoint: Endpoint
+    storage_region: Region
+    storage_publicBaseUrl: Public base URL
+    secret_unchanged: Leave blank to keep the saved encrypted secret.
+    endpoint_unchanged: Leave blank to keep the saved endpoint.
+    delivery_proxy: Flarum proxy
+    delivery_direct: Public direct URL
+    direct_warning_title: Direct delivery limitations
+    direct_link_warning: Direct URLs bypass PHP statistics, hotlink protection, and per-download authorization after the URL is issued.
+    direct_confirm: I understand and accept these limitations.
+    image_settings: Image settings
+    hotlink_protection: Reject cross-site referrers on tracked proxy delivery
+    thumbnailWidth: Thumbnail width
+    imageQuality: Image quality
+    plugin_settings: Plugin settings
+    orphanRetentionDays: Orphan retention days
+    mime_title: Confirm MIME type
+    mime_file: Upload a file for PHP finfo inspection
+    mime_extension: Extension lookup
+    mime_source: Result source
+    mime_detected: MIME result
+    mime_confirm: Inspect
+  forum:
+    upload: Upload files
+    library: File library
+    upload_title: Upload files
+    library_title: My file library
+    category: Category
+    choose_category: Select an upload category first.
+    choose_files: Click to choose files
+    drop_files: Drop files here
+    close: Close
+    cancel: Cancel
+    delete: Delete
+    network_error: Network error while uploading.
+    upload_status_queued: Queued
+    upload_status_uploading: Uploading
+    upload_status_success: Uploaded
+    upload_status_failed: Failed
+    library_empty: No successfully uploaded files.
+    select_file: Select a file to view its details. Double-click to insert it.
+    file_name: File name
+    file_size: File size
+    file_type: MIME type
+    uploaded_at: Uploaded at
+    insert_failed: The file could not be inserted into this editor.
+    delete_selected: "Delete selected ({count})"
+    delete_confirm_title: Delete selected files
+    delete_confirm_text: "Delete {count} selected files? Stored objects will also be removed."
+    unavailable: File unavailable
+  permissions:
+    view_other: View other users' file libraries
+    delete_other: Delete files in other users' libraries
+    category_view: "File category-{name}-view"
+    category_download: "File category-{name}-download"
+    category_upload: "File category-{name}-upload"
