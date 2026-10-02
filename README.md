@@ -1,15 +1,20 @@
 # alanqoq/mie-files (Archive)
 
-This repository is a permanent, read-only archive of released versions of `alanqoq/mie-files`, preserved by the [Extension Archive for Flarum](https://github.com/flarchive/archive-index).
+This repository is a permanent, read-only archive of released versions of `alanqoq/mie-files`, preserved by [Flarchive](https://github.com/flarchive/archive-index).
+
+> **ARCHIVE NOTICE:** This repository is a permanent, read-only historical archive. It is strictly for preservation, historical audit, and recovery. **Do not install extensions from this archive.** For active forum installations, always use the official package releases on Packagist and the original author's repository.
 
 > **Not affiliated with the Flarum Foundation or the Flarum project.**
 
-## Quick Download
+## Archive Status
 
-- **Latest Archived Version:** `v0.2.0`
-- **Flarum Compatibility:** `^2.0@beta`
-- **Direct Download (.zip):** [Download v0.2.0 (.zip)](https://github.com/flarchive/alanqoq-mie-files/archive/refs/tags/archive/v0.2.0.zip)
-- **All Releases & Tags:** [View All Releases & Tags](https://github.com/flarchive/alanqoq-mie-files/tags)
+- **Latest Archived Release:** `v0.2.0`
+- **Target Flarum Compatibility:** `^2.0@beta`
+- **Declared License:** `MIT`
+- **Upstream Repository:** https://github.com/alanqoq/flarum-mie-CDN-image-file.git
+- **All Archived Tags:** [View Tags](https://github.com/flarchive/alanqoq-mie-files/tags)
+
+*Archived source trees are preserved byte-for-byte as immutable tags under `refs/tags/archive/*`. The `main` branch contains only this archive notice.*
 
 ## Archive Catalog
 
